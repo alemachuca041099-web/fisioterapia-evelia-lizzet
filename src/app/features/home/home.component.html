@@ -1,168 +1,83 @@
-<app-hero />
+<app-hero
+  [eyebrow]="therapist.name + ' · Fisioterapia'"
+  title="Fisio a Domicilio"
+  [location]="therapist.location"
+  [tagline]="therapist.tagline"
+  [subtagline]="therapist.subtagline"
+  [tags]="heroTags"
+  primaryCtaLabel="Agenda al {{ therapist.whatsappDisplay }}"
+  [primaryCtaHref]="whatsappLink"
+  [image]="therapist.photo"
+  [imageAlt]="therapist.name"
+/>
 
-<section class="py-20">
+<section class="py-14 sm:py-20">
   <div class="section-shell">
-    <div class="mb-12 grid gap-4">
-      <div class="grid gap-4">
-        <span class="eyebrow">Promocionales</span>
-        <h2 class="section-title">Promociones pensadas para cuidar mejor tu recuperación.</h2>
-        <p class="section-copy">Consulta beneficios especiales, valoraciones iniciales y opciones disponibles para comenzar tu tratamiento con mayor facilidad.</p>
-      </div>
-    </div>
-
-    <div class="panel overflow-hidden p-3 sm:p-4">
-      <div class="relative overflow-hidden rounded-[28px] bg-slate-950">
-        <div
-          class="flex transition-transform duration-500 ease-out"
-          [style.transform]="'translateX(-' + currentPromoIndex() * 100 + '%)'"
-        >
-          @for (promo of promoSlides; track promo.title) {
-            <article class="relative min-w-full">
-              <img [src]="promo.image" [alt]="promo.title" class="h-[32rem] w-full object-cover md:h-[38rem]" />
-              <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.86)_0%,rgba(2,6,23,0.62)_42%,rgba(2,6,23,0.18)_100%)]"></div>
-
-              <div class="absolute inset-0 flex items-end">
-                <div class="grid max-w-2xl gap-4 px-5 pb-7 pt-7 text-white sm:px-7 sm:pb-10 sm:pt-8 lg:px-10 lg:pb-12 lg:pt-10">
-                  <span class="text-xs font-semibold uppercase tracking-[0.24em] text-white/70">{{ promo.eyebrow }}</span>
-                  <h3 class="max-w-xl text-2xl font-semibold tracking-[-0.04em] sm:text-3xl lg:text-4xl">{{ promo.title }}</h3>
-                  <p class="max-w-xl text-sm leading-6 text-white/80 sm:text-[15px]">{{ promo.description }}</p>
-
-                  <div class="flex flex-wrap gap-2.5 text-[11px] font-semibold text-white/90 sm:text-xs">
-                    @for (tag of promo.tags; track tag) {
-                      <span class="rounded-full border border-white/15 bg-white/10 px-3 py-2 backdrop-blur">{{ tag }}</span>
-                    }
-                  </div>
-
-                  <div class="flex flex-wrap gap-2.5 pt-1">
-                    <a class="btn-primary px-5 py-2.5 text-xs sm:text-sm" routerLink="/contacto" fragment="agendar">Agendar cita</a>
-                    <a class="btn-ghost px-4 py-2.5 text-xs sm:text-sm" routerLink="/servicios">Ver servicios</a>
-                  </div>
-                </div>
-              </div>
-            </article>
-          }
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-2 flex flex-col items-center gap-3 rounded-[20px] border border-slate-200/70 bg-white/80 px-4 py-3 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur">
-      <div class="flex flex-wrap items-center justify-center gap-3">
-        <button
-          type="button"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-[color:var(--color-primary)]"
-          (click)="previousPromo()"
-          aria-label="Promocional anterior"
-        >
-          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-            <path d="M12.5 4.5 7 10l5.5 5.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
-
-        <button
-          type="button"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-[color:var(--color-primary)]"
-          (click)="togglePromoAutoplay()"
-          [attr.aria-pressed]="!isPromoAutoplayActive()"
-          [attr.aria-label]="isPromoAutoplayActive() ? 'Pausar autoplay' : 'Reanudar autoplay'"
-        >
-          @if (isPromoAutoplayActive()) {
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path d="M6 4h3v12H6zm5 0h3v12h-3z"></path>
-            </svg>
-          } @else {
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path d="m6 4 9 6-9 6V4Z"></path>
-            </svg>
-          }
-        </button>
-
-        <button
-          type="button"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-[color:var(--color-primary)]"
-          (click)="nextPromo()"
-          aria-label="Siguiente promocional"
-        >
-          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-            <path d="M7.5 4.5 13 10l-5.5 5.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
+    <div class="home-editorial">
+      <div class="home-editorial__copy" [appReveal]="0">
+        <span class="eyebrow">Sobre mí</span>
+        <h2 class="section-title">{{ therapist.tagline }} {{ therapist.subtagline }}</h2>
+        <p class="section-copy">
+          Soy {{ therapist.name }}, licenciada en fisioterapia. Atiendo a domicilio en
+          {{ therapist.location }}, con planes de tratamiento pensados para cada paciente y su ritmo de
+          recuperación.
+        </p>
       </div>
 
-      <div class="flex items-center justify-center gap-2.5">
-        @for (promo of promoSlides; track promo.title; let index = $index) {
-          <button
-            type="button"
-            class="h-2 rounded-full bg-slate-300 transition-all duration-300"
-            [class.w-8]="currentPromoIndex() === index"
-            [class.bg-[color:var(--color-primary)]]="currentPromoIndex() === index"
-            [class.w-2]="currentPromoIndex() !== index"
-            (click)="goToPromo(index)"
-            [attr.aria-label]="'Ir al promocional ' + (index + 1)"
-          ></button>
+      <div class="home-editorial__cards">
+        @for (item of benefits; track item.title; let index = $index) {
+          <article class="home-editorial__card" [appReveal]="index * 90">
+            <span class="home-editorial__line"></span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </article>
         }
-      </div>
-
-      <div class="text-center text-[11px] font-medium uppercase tracking-[0.16em] text-slate-400">
-        {{ currentPromoIndex() + 1 }} / {{ promoSlides.length }} · {{ isPromoAutoplayActive() ? 'Autoplay activo' : 'Autoplay pausado' }}
-      </div>
-
-      <div class="h-1 w-full max-w-xs overflow-hidden rounded-full bg-slate-200">
-        <div
-          class="h-full rounded-full bg-[color:var(--color-primary)] transition-[width] duration-100 ease-linear"
-          [style.width.%]="promoProgress()"
-        ></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-20">
+<section class="home-process py-14 sm:py-20">
   <div class="section-shell">
-    <div class="mb-12 grid gap-4">
-      <span class="eyebrow">Beneficios</span>
-      <h2 class="section-title">Una experiencia más clara desde el primer clic.</h2>
-      <p class="section-copy">Diseño orientado a confianza clínica, lectura simple y conversión a cita.</p>
+    <div class="mb-12 grid gap-4 text-center">
+      <span class="eyebrow justify-center">Cómo funciona</span>
+      <h2 class="section-title mx-auto">Tres pasos, sin complicaciones.</h2>
     </div>
 
-    <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-      @for (benefit of benefits; track benefit.title) {
-        <article class="panel fade-up grid h-full p-6">
-          <div class="mb-4 flex items-center gap-3">
-            <div class="inline-flex rounded-2xl bg-slate-100 p-3 text-[color:var(--color-primary)]">
-              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold tracking-[-0.03em] text-slate-900">{{ benefit.title }}</h3>
-          </div>
-          <p class="mt-3 text-sm leading-7 text-slate-500">{{ benefit.description }}</p>
+    <div class="home-process__grid">
+      @for (item of processSteps; track item.step; let index = $index) {
+        <article class="home-process__card" [appReveal]="index * 110">
+          <span class="home-process__step">{{ item.step }}</span>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
         </article>
       }
     </div>
   </div>
 </section>
 
-<section class="bg-slate-50/80 py-20" id="servicios-destacados">
+<section class="home-services py-14 sm:py-20" id="servicios">
   <div class="section-shell">
-    <div class="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-      <div class="grid gap-4">
-        <span class="eyebrow">Servicios destacados</span>
-        <h2 class="section-title">Tratamientos visuales, claros y listos para convertir.</h2>
-      </div>
-      <a class="btn-secondary w-full sm:w-fit" routerLink="/servicios">Ver todos los servicios</a>
+    <div class="mb-12 grid gap-4 text-center">
+      <span class="eyebrow justify-center">Servicios</span>
+      <h2 class="section-title mx-auto">Atención especializada, en la comodidad de tu casa.</h2>
     </div>
 
-    <div class="grid gap-5 lg:grid-cols-3">
-      @for (service of services; track service.slug) {
-        <app-services-card [service]="service" />
+    <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      @for (service of services; track service.slug; let index = $index) {
+        <article class="home-service-card" [appReveal]="(index % 3) * 90">
+          <span class="home-service-card__index">0{{ index + 1 }}</span>
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.description }}</p>
+        </article>
       }
     </div>
   </div>
 </section>
 
-<section class="py-20">
+<section class="py-14 sm:py-20">
   <div class="section-shell">
-    <div class="mb-12 grid gap-4">
+    <div class="mb-12 grid gap-4" [appReveal]="0">
       <span class="eyebrow">Testimonios</span>
       <h2 class="section-title">La confianza también se construye con experiencia.</h2>
     </div>
@@ -171,59 +86,69 @@
   </div>
 </section>
 
-<section class="py-20">
+<section class="py-14 sm:py-20">
   <div class="section-shell">
-    <div class="overflow-hidden rounded-[32px] bg-[linear-gradient(135deg,#254f7d_0%,#2a9aa0_100%)] px-6 py-8 text-white shadow-[0_24px_70px_rgba(37,79,125,0.22)] sm:px-10 sm:py-12">
+    <div class="home-cta-banner" [appReveal]="0">
       <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
         <div class="grid gap-4">
-          <span class="text-xs font-semibold uppercase tracking-[0.24em] text-white/70">Agenda tu valoración</span>
-          <h2 class="max-w-2xl text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Solicita tu cita y recibe una respuesta rápida.</h2>
-          <div class="flex flex-wrap gap-3 text-sm text-white/80">
-            <span class="rounded-full border border-white/15 bg-white/10 px-3 py-2">Formulario simple</span>
-            <span class="rounded-full border border-white/15 bg-white/10 px-3 py-2">Horario preferido</span>
-            <span class="rounded-full border border-white/15 bg-white/10 px-3 py-2">Plan inicial claro</span>
+          <span class="text-xs font-semibold uppercase tracking-[0.24em] text-white/70">Agenda tu sesión</span>
+          <h2 class="max-w-2xl font-display text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
+            Volver a moverte sin dolor sí es posible.
+          </h2>
+          <div class="flex flex-wrap gap-3 text-sm text-white/85">
+            <span class="rounded-full border border-white/20 bg-white/10 px-3 py-2">Atención a domicilio</span>
+            <span class="rounded-full border border-white/20 bg-white/10 px-3 py-2">{{ therapist.location }}</span>
+            <span class="rounded-full border border-white/20 bg-white/10 px-3 py-2">Respuesta rápida</span>
           </div>
         </div>
 
-        <a class="btn-ghost w-full sm:w-fit" routerLink="/contacto" fragment="agendar">
-          Agendar cita
+        <a class="btn-ghost w-full sm:w-fit" [href]="whatsappLink" target="_blank" rel="noreferrer">
+          <app-whatsapp-icon class="h-4 w-4" />
+          Agenda al {{ therapist.whatsappDisplay }}
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="bg-slate-50/80 py-20">
+<section class="home-contact py-14 sm:py-20" id="contacto">
   <div class="section-shell">
-    <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-      <div class="grid gap-5">
-        <span class="eyebrow">Ubicación</span>
-        <h2 class="section-title">Ubicación y contacto claros para decisiones rápidas.</h2>
-        <p class="section-copy">Actualiza la dirección exacta y el enlace definitivo de Google Maps al pasar el sitio a producción.</p>
-        <div class="grid gap-3 text-sm text-slate-600">
-          <div class="panel p-4">Av. Reforma 000, Ciudad de México</div>
-          <div class="panel p-4">contacto@alfarifisioterapia.com</div>
-          <div class="panel p-4">Lunes a viernes · 8:00 a 19:00</div>
-        </div>
-        <a class="btn-secondary w-full sm:w-fit" href="https://maps.google.com/?q=Alfari%20Fisioterapia" target="_blank" rel="noreferrer">Abrir en Google Maps</a>
+    <div class="home-contact__card" [appReveal]="0">
+      <div class="home-contact__copy">
+        <span class="eyebrow">Contacto</span>
+        <h2 class="section-title">Hablemos por WhatsApp y coordinamos tu visita.</h2>
+        <p class="section-copy">
+          Escríbeme directo, sin formularios ni esperas — te respondo por WhatsApp y armamos el mejor
+          horario para tu sesión a domicilio.
+        </p>
+
+        <a class="btn-primary w-fit" [href]="whatsappLink" target="_blank" rel="noreferrer">
+          <app-whatsapp-icon class="h-4 w-4" />
+          Agenda al {{ therapist.whatsappDisplay }}
+        </a>
       </div>
 
-      <div class="panel overflow-hidden p-3">
-        <iframe
-          title="Mapa de Alfari Fisioterapia"
-          src="https://www.google.com/maps?q=Alfari%20Fisioterapia&output=embed"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          class="h-[26rem] w-full rounded-[24px] border-0"
-        ></iframe>
+      <div class="home-contact__details">
+        <div class="home-contact__detail">
+          <span class="home-contact__detail-label">Zona de cobertura</span>
+          <p>{{ coverage.area }}</p>
+        </div>
+        <div class="home-contact__detail">
+          <span class="home-contact__detail-label">Horario</span>
+          <p>{{ coverage.hours }}</p>
+        </div>
+        <div class="home-contact__detail">
+          <span class="home-contact__detail-label">WhatsApp</span>
+          <p>{{ therapist.whatsappDisplay }}</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-20">
+<section class="py-14 sm:py-20" id="preguntas">
   <div class="section-shell">
-    <div class="mb-12 grid gap-4">
+    <div class="mb-12 grid gap-4" [appReveal]="0">
       <span class="eyebrow">FAQ</span>
       <h2 class="section-title">Preguntas frecuentes resueltas con claridad.</h2>
     </div>

@@ -1,19 +1,8 @@
 export type ServiceItem = {
   slug: string;
   title: string;
-  shortDescription: string;
   description: string;
-  benefits: string[];
   icon: string;
-  image: string;
-  tag: string;
-};
-
-export type DoctorItem = {
-  name: string;
-  specialty: string;
-  bio: string;
-  image: string;
 };
 
 export type TestimonialItem = {
@@ -27,157 +16,176 @@ export type FaqItem = {
   answer: string;
 };
 
-export const appointmentRoute = '/contacto#agendar';
+export type ChatIntent = {
+  label: string;
+  message: string;
+  answer?: string;
+};
 
-export const benefits = [
+export const therapist = {
+  name: 'LFT. Evelia Lizzet',
+  role: 'Fisioterapia a domicilio',
+  location: 'San Juan del Río y alrededores',
+  tagline: 'Tu recuperación, mi compromiso.',
+  subtagline: 'Volver a moverte sin dolor sí es posible.',
+  photo: 'assets/images/inicio/evelia.png',
+  whatsappNumber: '522331132393',
+  whatsappDisplay: '233 113 2393',
+  whatsappMessage: 'Hola, quiero agendar una sesión de fisioterapia a domicilio.'
+} as const;
+
+export function whatsappLinkFor(message: string): string {
+  return `https://wa.me/${therapist.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+export const whatsappLink = whatsappLinkFor(therapist.whatsappMessage);
+
+export const chatIntents: ChatIntent[] = [
   {
-    title: 'Valoración precisa',
-    description: 'Detectamos dolor, movilidad y objetivos para definir un plan realista desde la primera visita.'
+    label: '¿Las sesiones son en mi domicilio?',
+    message: 'Hola, quisiera información sobre las sesiones de fisioterapia a domicilio.',
+    answer: `Sí, todas las sesiones son en tu domicilio, en ${therapist.location}, con el equipo necesario para cada tratamiento.`
   },
   {
-    title: 'Tratamiento personalizado',
-    description: 'Cada sesión responde a tu evolución, no a protocolos genéricos.'
+    label: 'Tengo dolor de espalda o una lesión',
+    message: 'Hola, tengo dolor de espalda / una lesión y quisiera información sobre fisioterapia a domicilio.',
+    answer:
+      'Sí, trato dolor de espalda, contracturas y lesiones musculares o articulares con terapia manual y ejercicio guiado, todo a domicilio.'
   },
   {
-    title: 'Seguimiento claro',
-    description: 'Explicamos avances, tiempos y siguientes pasos con lenguaje simple.'
+    label: 'Rehabilitación post-operatoria',
+    message: 'Hola, necesito rehabilitación post-operatoria a domicilio. ¿Me pueden dar información?',
+    answer: 'Sí, hago rehabilitación post-operatoria progresiva y segura, con seguimiento cercano en cada visita.'
   },
   {
-    title: 'Agenda sin fricción',
-    description: 'Solicita tu cita en línea y te confirmamos el mejor horario.'
+    label: 'Atención para adulto mayor',
+    message: 'Hola, busco fisioterapia a domicilio para un adulto mayor. ¿Qué información necesitan?',
+    answer: 'Sí, atiendo adultos mayores enfocándome en movilidad, equilibrio e independencia, siempre en su domicilio.'
+  },
+  {
+    label: 'Quiero agendar una cita',
+    message: 'Hola, quiero agendar una cita de fisioterapia a domicilio.'
+  },
+  {
+    label: 'Precios y disponibilidad',
+    message: 'Hola, me gustaría conocer precios y disponibilidad para fisioterapia a domicilio.'
   }
-] as const;
+];
 
 export const services: ServiceItem[] = [
   {
-    slug: 'rehabilitacion-fisica',
-    title: 'Rehabilitación física',
-    shortDescription: 'Recupera movimiento y fuerza después de lesión o cirugía.',
-    description:
-      'Programa integral para pacientes postquirúrgicos y lesiones musculoesqueléticas. Combina terapia manual, ejercicio terapéutico y control funcional.',
-    benefits: [
-      'Menos dolor e inflamación',
-      'Más movilidad y control',
-      'Progresión segura por objetivos'
-    ],
-    icon: 'shield',
-    image:
-      'https://images.unsplash.com/photo-1519824145371-296894a0daa9?auto=format&fit=crop&w=1200&q=80',
-    tag: 'Ortopedia'
+    slug: 'dolor-de-espalda',
+    title: 'Dolor de espalda',
+    description: 'Alivio de dolor lumbar, cervical y contracturas con terapia manual y ejercicio guiado.',
+    icon: 'shield'
   },
   {
-    slug: 'fisioterapia-deportiva',
-    title: 'Fisioterapia deportiva',
-    shortDescription: 'Prevención, recuperación y retorno seguro al deporte.',
-    description:
-      'Atención dirigida a deportistas amateurs y competitivos para recuperar rendimiento, controlar carga y disminuir recaídas.',
-    benefits: [
-      'Retorno deportivo medible',
-      'Prevención de recaídas',
-      'Trabajo específico por disciplina'
-    ],
-    icon: 'bolt',
-    image:
-      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80',
-    tag: 'Performance'
+    slug: 'lesiones',
+    title: 'Lesiones',
+    description: 'Recuperación de esguinces, desgarros y lesiones musculares o articulares.',
+    icon: 'activity'
   },
   {
-    slug: 'terapia-manual',
-    title: 'Terapia manual',
-    shortDescription: 'Alivio de dolor y mejora de movilidad articular.',
-    description:
-      'Técnicas especializadas de movilización y liberación de tejidos para disminuir rigidez, mejorar función y preparar el movimiento.',
-    benefits: [
-      'Menos tensión muscular',
-      'Mejor rango articular',
-      'Sesiones combinadas con ejercicio'
-    ],
-    icon: 'hand',
-    image:
-      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1200&q=80',
-    tag: 'Dolor'
+    slug: 'post-operatorio',
+    title: 'Post-operatorio',
+    description: 'Rehabilitación progresiva y segura tras una cirugía, con seguimiento cercano.',
+    icon: 'heart'
   },
   {
-    slug: 'ergonomia-laboral',
-    title: 'Ergonomía laboral',
-    shortDescription: 'Programas preventivos para equipos y empresas.',
-    description:
-      'Diseñamos acciones de ergonomía, pausas activas y seguimiento para disminuir molestias, fatiga y ausentismo.',
-    benefits: [
-      'Prevención para equipos',
-      'Hábitos posturales mejores',
-      'Acciones medibles para convenios'
-    ],
-    icon: 'briefcase',
-    image:
-      'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80',
-    tag: 'Empresas'
+    slug: 'adulto-mayor',
+    title: 'Adulto mayor',
+    description: 'Atención pensada en movilidad, equilibrio e independencia para la tercera edad.',
+    icon: 'sparkles'
+  },
+  {
+    slug: 'deportiva',
+    title: 'Deportiva',
+    description: 'Recuperación y prevención de lesiones para volver a entrenar con confianza.',
+    icon: 'bolt'
+  },
+  {
+    slug: 'neurologica',
+    title: 'Neurológica',
+    description: 'Rehabilitación funcional para procesos neurológicos, con metas claras por etapa.',
+    icon: 'briefcase'
   }
 ];
 
-export const doctors: DoctorItem[] = [
+export const processSteps = [
   {
-    name: 'Dra. Andrea Flores',
-    specialty: 'Fisioterapia musculoesquelética',
-    bio: 'Especialista en dolor lumbar, rehabilitación ortopédica y educación del movimiento.',
-    image: 'assets/images/team/andrea-flores.svg'
+    step: '01',
+    title: 'Escríbeme',
+    description: 'Me cuentas qué te pasa y coordinamos día y hora directo por WhatsApp.'
   },
   {
-    name: 'Lic. Mauricio Rivas',
-    specialty: 'Fisioterapia deportiva',
-    bio: 'Enfoque en readaptación física, prevención de lesiones y retorno al deporte.',
-    image: 'assets/images/team/mauricio-rivas.svg'
+    step: '02',
+    title: 'Valoración a domicilio',
+    description: 'Voy a tu casa, evalúo dolor y movilidad, y armamos un plan de tratamiento claro.'
   },
   {
-    name: 'Lic. Valeria Sánchez',
-    specialty: 'Terapia manual y postura',
-    bio: 'Experiencia en movilidad articular, liberación miofascial y ergonomía clínica.',
-    image: 'assets/images/team/valeria-sanchez.svg'
+    step: '03',
+    title: 'Sesiones y seguimiento',
+    description: 'Tratamiento a tu ritmo, con ajustes según tu evolución en cada visita.'
   }
-];
+] as const;
+
+export const coverage = {
+  hours: 'Lunes a sábado · 8:00 a 20:00',
+  area: therapist.location
+} as const;
+
+export const benefits = [
+  {
+    title: 'Atención en tu casa',
+    description: 'Sin traslados ni salas de espera: la sesión se adapta a tu espacio y tu horario.'
+  },
+  {
+    title: 'Plan personalizado',
+    description: 'Cada tratamiento responde a tu evolución, no a protocolos genéricos.'
+  },
+  {
+    title: 'Seguimiento cercano',
+    description: 'Explico avances, tiempos y siguientes pasos con lenguaje simple.'
+  },
+  {
+    title: 'Agenda por WhatsApp',
+    description: 'Escríbeme y te confirmo el mejor horario disponible.'
+  }
+] as const;
 
 export const testimonials: TestimonialItem[] = [
   {
-    author: 'Mariana G.',
-    role: 'Paciente postquirúrgica',
-    quote: 'Recuperé movilidad con un plan claro y una atención muy profesional.'
+    author: 'Rosa M.',
+    role: 'Paciente adulto mayor',
+    quote: 'Las sesiones en casa me dieron mucha confianza para volver a caminar sin miedo.'
   },
   {
-    author: 'Jorge T.',
-    role: 'Corredor amateur',
-    quote: 'Volví a entrenar sin dolor y con mucha más confianza.'
+    author: 'Carlos H.',
+    role: 'Recuperación post-operatoria',
+    quote: 'El seguimiento fue puntual y muy profesional, noté avances desde las primeras semanas.'
   },
   {
-    author: 'Equipo RH',
-    role: 'Convenio empresarial',
-    quote: 'Las acciones preventivas mejoraron el bienestar del equipo desde el primer mes.'
+    author: 'Daniela R.',
+    role: 'Dolor de espalda',
+    quote: 'Por fin entendí qué me pasaba y cómo cuidarme. El dolor bajó muchísimo.'
   }
 ];
 
 export const faqs: FaqItem[] = [
   {
-    question: '¿Necesito valoración antes de iniciar tratamiento?',
-    answer: 'Sí. La primera cita incluye entrevista clínica y valoración funcional para definir el plan correcto.'
+    question: '¿Las sesiones son en mi domicilio?',
+    answer: 'Sí. Voy a tu casa en San Juan del Río y alrededores con el equipo necesario para cada sesión.'
   },
   {
-    question: '¿Puedo agendar en línea?',
-    answer: 'Sí. Todos los botones de agendar te llevan al formulario de cita en la página de contacto.'
+    question: '¿Cómo agendo una cita?',
+    answer: 'Escríbeme directo por WhatsApp al 233 113 2393 y coordinamos el horario que te funcione mejor.'
   },
   {
     question: '¿Atienden dolor de espalda y lesiones deportivas?',
-    answer: 'Sí. Son dos de las consultas más frecuentes y se trabajan con terapia manual y ejercicio terapéutico.'
+    answer: 'Sí, son dos de las consultas más frecuentes y se trabajan con terapia manual y ejercicio terapéutico.'
   },
   {
-    question: '¿Ofrecen convenios empresariales?',
-    answer: 'Sí. Diseñamos propuestas para prevención, ergonomía y bienestar ocupacional.'
+    question: '¿Manejan rehabilitación post-operatoria y de adultos mayores?',
+    answer: 'Sí. Diseño planes progresivos y seguros según tu proceso, con seguimiento en cada visita.'
   }
 ];
-
-export const convenioBrands = [
-  { name: 'VitalCorp', image: 'assets/images/brands/vitalcorp.svg' },
-  { name: 'Nexo Salud', image: 'assets/images/brands/nexo-salud.svg' },
-  { name: 'Biomek', image: 'assets/images/brands/biomek.svg' },
-  { name: 'MoviLabs', image: 'assets/images/brands/movilabs.svg' },
-  { name: 'Axis Care', image: 'assets/images/brands/axis-care.svg' },
-  { name: 'Nova Industrial', image: 'assets/images/brands/nova-industrial.svg' }
-] as const;

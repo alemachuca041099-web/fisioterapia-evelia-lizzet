@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "alfari-fisioterapia": {
+    "alfiari-fisioterapia": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "alfari-fisioterapia:build:production"
+              "buildTarget": "alfiari-fisioterapia:build:production"
             },
             "development": {
-              "buildTarget": "alfari-fisioterapia:build:development"
+              "buildTarget": "alfiari-fisioterapia:build:development"
             }
           },
           "defaultConfiguration": "development"

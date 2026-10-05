@@ -18,11 +18,11 @@ export class SeoService {
   ) {}
 
   update(config: SeoConfig): void {
-    const siteName = 'Alfari Fisioterapia';
+    const siteName = 'Fisio a Domicilio';
     const fullTitle = `${config.title} | ${siteName}`;
     const canonicalUrl = new URL(config.path ?? '', this.document.location.origin).toString();
     const imageUrl = new URL(
-      config.image ?? 'assets/images/team/andrea-flores.svg',
+      config.image ?? 'assets/images/inicio/evelia.png',
       this.document.location.origin
     ).toString();
 

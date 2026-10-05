@@ -1,6 +1,6 @@
 <div class="grid gap-5 lg:grid-cols-3">
-  @for (item of items; track item.author) {
-    <article class="panel grid h-full gap-5 p-6">
+  @for (item of items; track item.author; let index = $index) {
+    <article class="panel grid h-full gap-5 p-6" [appReveal]="index * 100">
       <div class="flex items-center gap-2 text-[color:var(--color-secondary)]">
         <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path d="M7.612 3.455A1 1 0 018 4.25V8a1 1 0 01-1 1H5.397a5.5 5.5 0 001.024 3.41A4.5 4.5 0 019 16.5a1 1 0 010 2 6.5 6.5 0 01-5.282-2.73A7.5 7.5 0 012.5 11.25V8a4.75 4.75 0 014.75-4.75h.362zM15.612 3.455A1 1 0 0116 4.25V8a1 1 0 01-1 1h-1.603a5.5 5.5 0 001.024 3.41A4.5 4.5 0 0117 16.5a1 1 0 010 2 6.5 6.5 0 01-5.282-2.73A7.5 7.5 0 0110.5 11.25V8a4.75 4.75 0 014.75-4.75h.362z"/>

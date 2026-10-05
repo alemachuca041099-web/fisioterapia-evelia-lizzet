@@ -1,0 +1,63 @@
+@if (isOpen()) {
+  <div class="chat-widget__panel" role="dialog" aria-label="Chat de WhatsApp">
+    <div class="chat-widget__header">
+      <img [src]="therapist.photo" [alt]="therapist.name" class="chat-widget__avatar" />
+      <div class="chat-widget__header-copy">
+        <p class="chat-widget__name">{{ therapist.name }}</p>
+        <p class="chat-widget__status"><span class="chat-widget__dot"></span> Normalmente responde rápido</p>
+      </div>
+      <button type="button" class="chat-widget__close" (click)="close()" aria-label="Cerrar chat">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4" aria-hidden="true">
+          <path d="M5 5l10 10M15 5L5 15" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="chat-widget__body" #body>
+      @for (message of messages(); track $index) {
+        @if (message.from === 'bot') {
+          <p class="chat-widget__bubble chat-widget__bubble--bot">{{ message.text }}</p>
+        } @else {
+          <p class="chat-widget__bubble chat-widget__bubble--user">{{ message.text }}</p>
+        }
+
+        @if (message.ctaHref) {
+          <a class="chat-widget__inline-cta" [href]="message.ctaHref" target="_blank" rel="noreferrer" (click)="close()">
+            <app-whatsapp-icon class="h-4 w-4" />
+            {{ message.ctaLabel }}
+          </a>
+        }
+      }
+
+      <div class="chat-widget__options">
+        @for (intent of chatIntents; track intent.label) {
+          <button type="button" class="chat-widget__option" (click)="selectIntent(intent)">
+            {{ intent.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <a class="chat-widget__footer" [href]="whatsappLink" target="_blank" rel="noreferrer">
+      <app-whatsapp-icon class="h-4 w-4" />
+      Continuar en WhatsApp
+    </a>
+  </div>
+}
+
+<button
+  type="button"
+  class="chat-widget__fab"
+  [class.chat-widget__fab--open]="isOpen()"
+  (click)="toggle()"
+  [attr.aria-expanded]="isOpen()"
+  aria-label="Abrir chat de WhatsApp"
+>
+  @if (isOpen()) {
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" class="h-6 w-6" aria-hidden="true">
+      <path d="M5 5l10 10M15 5L5 15" stroke-linecap="round"></path>
+    </svg>
+  } @else {
+    <app-whatsapp-icon class="h-7 w-7" />
+  }
+</button>

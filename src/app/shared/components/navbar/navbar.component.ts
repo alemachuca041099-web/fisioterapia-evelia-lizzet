@@ -1,17 +1,25 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, HostListener, Inject, OnDestroy, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, HostListener, Inject, OnDestroy, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+import { therapist, whatsappLink } from '../../../core/data/clinic-data';
+import { NavMenuStateService } from '../../../core/services/nav-menu-state.service';
+import { WhatsappIconComponent } from '../whatsapp-icon/whatsapp-icon.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, WhatsappIconComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnDestroy {
-  protected readonly isMenuOpen = signal(false);
+  protected readonly therapist = therapist;
+  protected readonly whatsappLink = whatsappLink;
   protected readonly isScrolled = signal(false);
+
+  private readonly menuState = inject(NavMenuStateService);
+  protected readonly isMenuOpen = this.menuState.isOpen;
 
   constructor(@Inject(DOCUMENT) private readonly document: Document) {}
 
@@ -25,12 +33,12 @@ export class NavbarComponent implements OnDestroy {
   }
 
   protected closeMenu(): void {
-    this.isMenuOpen.set(false);
+    this.menuState.isOpen.set(false);
     this.setMenuScrollLock(false);
   }
 
   protected toggleMenu(): void {
-    this.isMenuOpen.update((value) => {
+    this.menuState.isOpen.update((value) => {
       const next = !value;
       this.setMenuScrollLock(next);
       return next;
